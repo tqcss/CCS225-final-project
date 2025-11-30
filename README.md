@@ -5,10 +5,13 @@ Organization`.
 # Running the Project
 
 ### A. Importing to NAND2Tetris
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-condimentum quam non enim ultricies, quis pulvinar diam vehicula.
-2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-condimentum quam non enim ultricies, quis pulvinar diam vehicula.
+1. Clone this repository on your local machine or alternatively,
+download the repository as a zip file and extract it.
+2. In the [NAND2Tetris Assembler](https://nand2tetris.github.io/web-ide/asm)'s
+source section, select `Load File -> Select local file`, then select `source.asm`
+in your local repository.
+3. Translate the file to `.hack` format then proceed to the CPU emulator.
+4. Run the program with the speed slider set to the fastest speed.
 
 ### B. Simulating in VSCode
 1. Install [Java Runtime Environment](https://www.java.com/en/download/manual.jsp)
