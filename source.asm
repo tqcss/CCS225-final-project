@@ -4,38 +4,103 @@
 // Date.....: November 30, 2025
 // =================================
 
-@SCREEN
-D=A
-@addr
-M=D          // addr = start of screen
 
-@32
-D=A
-@count
-M=D          // 32 words = 512 pixels (full row)
+// ---------------
+// GLOBAL VARIBLES
+// ---------------
 
-(LOOP)
-    @count
+@VAR_user_input
+M=0
+
+
+// ---------
+// KEY ENUMS
+// ---------
+
+// KEY_c = 67
+@67
+D=A
+@KEY_c
+M=D
+
+// KEY_d = 68
+@68
+D=A
+@KEY_d
+M=D
+
+// KEY_e = 69
+@69
+D=A
+@KEY_e
+M=D
+
+// KEY_f = 70
+@70
+D=A
+@KEY_f
+M=D
+
+// KEY_q = 81
+@81
+D=A
+@KEY_q
+M=D
+
+// KEY_r = 82
+@82
+D=A
+@KEY_r
+M=D
+
+// KEY_s = 83
+@83
+D=A
+@KEY_s
+M=D
+
+
+// FUNCTIONS
+(FCALL_get_user_input)
+    // compare the value of VAR_user_input to the current keyboard input
+    @VAR_user_input
     D=M
-    @END
-    D;JEQ     // if count == 0 → END
+    @KBD
+    D=D+M
 
-    // draw one 16-pixel block
-    @addr
-    A=M
-    M=-1      // sets 16 pixels to black (1111111111111111)
+    // if both @VAR_user_input and @KBD reads no input from the user,
+    // loop through the function again
+    @FCALL_get_user_input
+    D;JEQ
 
-    // move to next word
-    @addr
-    M=M+1
+    // else, set VAR_user_input to the current keyboard input
+    @KBD
+    D=M
+    @VAR_user_input
+    M=D
+@FEND_get_user_input
+0;JMP
 
-    // decrement counter
-    @count
-    M=M-1
 
-    @LOOP
+// PROGRAM_LOOP
+(main_loop)
+
+    @FCALL_get_user_input
     0;JMP
+    (FEND_get_user_input)
 
-(END)
-    @END
-    0;JMP
+    // if the user inputs `q`, end the program
+    @VAR_user_input
+    D=M
+    @KEY_q
+    D=D-M
+    @HALT
+    D;JEQ
+    
+@main_loop
+0;JMP
+
+// kill program; stop cpu from executing other instructions
+(HALT)
+@HALT
+0;JMP
